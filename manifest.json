@@ -7,7 +7,7 @@
         "default_popup": "popup.html"
     },
 
-	"icons": { "16": "calc.png",
-               "48": "calc.png",
-               "128": "calc.png" }	   
+	"icons": { "16": "vk_on.png",
+               "48": "vk_on.png",
+               "128": "vk_on.png" }
 }
