@@ -1,13 +1,32 @@
 {
-    "manifest_version": 2,
-    "name": "Калькулятор",
-    "description": "Просто калькулятор",
-    "version": "1.0",
-    "browser_action": {      
-        "default_popup": "popup.html"
-    },
+  "manifest_version": 2,
+  "name": "Vk Online",
+  "description": "Vk Online",
+  "version": "1.0",
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
 
-	"icons": { "16": "vk_on.png",
-               "48": "vk_on.png",
-               "128": "vk_on.png" }
+  "icons": {
+    "16":  "images/vk_on.png",
+    "48":  "images/vk_on.png",
+    "128": "images/vk_on.png"
+  },
+  "permissions": [
+    "cookies",
+    "storage",
+    "tabs",
+    "activeTab",
+    "https://*/*"
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+
+  "content_security_policy": "script-src 'self' https://api.vk.com; object-src 'self'"
 }
