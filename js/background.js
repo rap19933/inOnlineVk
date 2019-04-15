@@ -7,22 +7,22 @@ var time;
 var sound;
 
 chrome.storage.sync.get({
-    token:  '',
+    token: '',
     idUser: '',
-    time:   '',
-    sound:  true
-}, function(items) {
+    time: '',
+    sound: true
+}, function (items) {
     if (items.token && items.idUser && items.time) {
-        url   = 'https://api.vk.com/method/users.get?user_ids=' + items.idUser + '&fields=online&access_token=' + items.token + '&v=5.92';
-        time  = items.time * 1000 * 60;
+        url = 'https://api.vk.com/method/users.get?user_ids=' + items.idUser + '&fields=online&access_token=' + items.token + '&v=5.92';
+        time = items.time * 1000 * 60;
         sound = items.sound;
- console.log(JSON.stringify(time, null, 4));
+
         if (getAjax()) {
             inUser = true;
         } else {
             inUser = false;
-            chrome.browserAction.setBadgeText({ text: 'OFF' });
-            chrome.browserAction.setBadgeBackgroundColor({ color: '#980505' });
+            chrome.browserAction.setBadgeText({text: 'OFF'});
+            chrome.browserAction.setBadgeBackgroundColor({color: '#980505'});
             if (sound) {
                 var audio = new Audio();
                 audio.src = 'sound/out.mp3';
@@ -35,18 +35,18 @@ chrome.storage.sync.get({
                 if (!inUser) {
                     inUser = true;
 
-                    chrome.browserAction.setBadgeText({ text: 'ON' });
-                    chrome.browserAction.setBadgeBackgroundColor({ color: '#19953a' });
+                    chrome.browserAction.setBadgeText({text: 'ON'});
+                    chrome.browserAction.setBadgeBackgroundColor({color: '#19953a'});
 
                     chrome.cookies.set({
-                        "name": "startTime",
-                        "url": "https://api.vk.com",
-                        "value": new Date().toString()
+                        'name': 'startTime',
+                        'url': 'https://api.vk.com',
+                        'value': new Date().toString()
                     });
                     chrome.cookies.set({
-                        "name": "endTime",
-                        "url": "https://api.vk.com",
-                        "value": ""
+                        'name': 'endTime',
+                        'url': 'https://api.vk.com',
+                        'value': ''
                     });
                     if (sound) {
                         var audio = new Audio();
@@ -58,13 +58,13 @@ chrome.storage.sync.get({
                 if (inUser) {
                     inUser = false;
 
-                    chrome.browserAction.setBadgeText({ text: 'OFF' });
-                    chrome.browserAction.setBadgeBackgroundColor({ color: '#980505' });
+                    chrome.browserAction.setBadgeText({text: 'OFF'});
+                    chrome.browserAction.setBadgeBackgroundColor({color: '#980505'});
 
                     chrome.cookies.set({
-                        "name": "endTime",
-                        "url": "https://api.vk.com",
-                        "value": new Date().toString()
+                        'name': 'endTime',
+                        'url': 'https://api.vk.com',
+                        'value': new Date().toString()
                     });
                     if (sound) {
                         var audio = new Audio();
@@ -78,22 +78,23 @@ chrome.storage.sync.get({
 });
 
 
-
 function getAjax() {
 
-     $.ajax({
-		url: url,
-		type: 'GET',
-		dataType: 'json',
+    $.ajax({
+        url: url,
+        type: 'GET',
+        crossDomain: true,
+        dataType: 'jsonp',
         cache: false
-	})
-		.done(function(data) {
-			resAjax = data.response[0].online;
-		});
-	return resAjax;
+    })
+        .done(function (data) {
+            console.log(JSON.stringify(data, null, 4));
+            resAjax = data.response[0].online;
+        });
+    return resAjax;
 }
 
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function () {
     /*chrome.storage.sync.get({
         token:  '',
         idUser: '',
