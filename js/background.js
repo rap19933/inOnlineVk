@@ -88,7 +88,6 @@ function getAjax() {
         cache: false
     })
         .done(function (data) {
-            console.log(JSON.stringify(data, null, 4));
             resAjax = data.response[0].online;
         });
     return resAjax;
